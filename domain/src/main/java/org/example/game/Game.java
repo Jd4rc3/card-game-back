@@ -69,7 +69,7 @@ public class Game extends AggregateEvent<GameId> {
     appendChange(new RoundCreated(round, time)).apply();
   }
 
-  public void chageBoardTime(BoardId boardId, Integer time) {
+  public void changeBoardTime(BoardId boardId, Integer time) {
     appendChange(new BoardTimeChanged(boardId, time)).apply();
   }
 

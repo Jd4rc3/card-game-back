@@ -1,44 +1,44 @@
 package org.example.game.commands;
 
 import co.com.sofka.domain.generic.Command;
-import org.example.game.values.BoardId;
-import org.example.game.values.GameId;
+import java.util.Map;
+import org.example.game.entities.Player;
 
 public class CreateGameCommand extends Command {
 
-  private GameId gameId;
+  private String gameId;
 
-  private BoardId boardId;
+  private Map<String, String> players;
 
-  private Integer time;
+  private Player mainPlayer;
 
-  public CreateGameCommand(GameId gameId, BoardId boardId, Integer time) {
+  public CreateGameCommand(String gameId, Map<String, String> players, Player mainPlayer) {
     this.gameId = gameId;
-    this.boardId = boardId;
-    this.time = time;
+    this.players = players;
+    this.mainPlayer = mainPlayer;
   }
 
-  public GameId getGameId() {
+  public String getGameId() {
     return gameId;
   }
 
-  public void setGameId(GameId gameId) {
+  public void setGameId(String gameId) {
     this.gameId = gameId;
   }
 
-  public BoardId getBoardId() {
-    return boardId;
+  public Map<String, String> getPlayers() {
+    return players;
   }
 
-  public void setBoardId(BoardId boardId) {
-    this.boardId = boardId;
+  public void setPlayers(Map<String, String> players) {
+    this.players = players;
   }
 
-  public Integer getTime() {
-    return time;
+  public Player getMainPlayer() {
+    return mainPlayer;
   }
 
-  public void setTime(Integer time) {
-    this.time = time;
+  public void setMainPlayer(Player mainPlayer) {
+    this.mainPlayer = mainPlayer;
   }
 }

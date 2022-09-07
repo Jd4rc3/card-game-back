@@ -13,11 +13,11 @@ public class Card implements ValueObject<Card.Props>, Comparable<Card> {
 
   private final Integer power;
 
-  public Card(MasterCardId cardId, Boolean isHidden, Boolean isEnable, Integer power) {
+  public Card(MasterCardId cardId, Boolean isHidden, Boolean isEnable) {
     this.cardId = cardId;
     this.isHidden = isHidden;
     this.isEnable = isEnable;
-    this.power = power;
+    this.power = 0;
   }
 
   @Override
