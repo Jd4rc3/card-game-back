@@ -90,7 +90,6 @@ public class Game extends AggregateEvent<GameId> {
     appendChange(new CardsAssignedToPlayer(playerId, cards, points)).apply();
   }
 
-
   public void finishRound(BoardId boardId, Set<PlayerId> playerIds) {
     appendChange(new RoundFinished(boardId, playerIds)).apply();
   }
