@@ -86,8 +86,8 @@ public class Game extends AggregateEvent<GameId> {
     appendChange(new RoundStarted()).apply();
   }
 
-  public void asignCardsToPlayer(PlayerId playerId, Set<Card> cards) {
-    appendChange(new CardsAssignedToPlayer(playerId, cards)).apply();
+  public void asignCardsToPlayer(PlayerId playerId, Integer points, Set<Card> cards) {
+    appendChange(new CardsAssignedToPlayer(playerId, cards, points)).apply();
   }
 
 

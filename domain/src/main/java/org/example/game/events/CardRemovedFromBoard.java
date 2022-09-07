@@ -11,10 +11,13 @@ public class CardRemovedFromBoard extends DomainEvent {
 
   private final PlayerId playerId;
 
+  private final Card card;
+
   public CardRemovedFromBoard(BoardId boardId, PlayerId playerId, Card card) {
     super("game.CardRemovedFromBoard");
     this.boardId = boardId;
     this.playerId = playerId;
+    this.card = card;
   }
 
   public BoardId getBoardId() {
@@ -23,5 +26,9 @@ public class CardRemovedFromBoard extends DomainEvent {
 
   public PlayerId getPlayerId() {
     return playerId;
+  }
+
+  public Card getCard() {
+    return card;
   }
 }

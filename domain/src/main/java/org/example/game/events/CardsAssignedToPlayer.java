@@ -7,20 +7,27 @@ import org.example.game.values.PlayerId;
 
 public class CardsAssignedToPlayer extends DomainEvent {
 
-  private final Set<Card> cards;
-  private final PlayerId playerId;
+  private final Set<Card> betCards;
+  private final PlayerId winnerId;
 
-  public CardsAssignedToPlayer(PlayerId playerId, Set<Card> cards) {
+  private final Integer points;
+
+  public CardsAssignedToPlayer(PlayerId winnerId, Set<Card> betCards, Integer points) {
     super("game.CardsAssignedToPlayer");
-    this.cards = cards;
-    this.playerId = playerId;
+    this.betCards = betCards;
+    this.winnerId = winnerId;
+    this.points = points;
   }
 
-  public Set<Card> getCards() {
-    return cards;
+  public Set<Card> getBetCards() {
+    return betCards;
   }
 
-  public PlayerId getPlayerId() {
-    return playerId;
+  public Integer getPoints() {
+    return points;
+  }
+
+  public PlayerId getWinnerId() {
+    return winnerId;
   }
 }
