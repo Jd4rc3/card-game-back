@@ -31,4 +31,13 @@ public class PlayerAdded extends DomainEvent {
   public Deck getDeck() {
     return deck;
   }
+
+  @Override
+  public String toString() {
+    return "PlayerAdded{" +
+        "identity=" + identity +
+        ", alias='" + alias + '\'' +
+        ", deck=" + deck +
+        '}';
+  }
 }

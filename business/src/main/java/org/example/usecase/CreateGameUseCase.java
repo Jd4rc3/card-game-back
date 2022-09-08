@@ -59,9 +59,8 @@ public class CreateGameUseCase extends UseCaseForCommand<CreateGameCommand> {
                       });
 
                   var game = new Game(GameId.of(createGameCommand.getGameId()),
-                      PlayerId.of(createGameCommand.getMainPlayer().identity().value()),
+                      PlayerId.of(createGameCommand.getMainPlayer()),
                       factory
-
                   );
 
                   return game.getUncommittedChanges();

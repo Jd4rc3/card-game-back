@@ -2,7 +2,6 @@ package org.example.game.commands;
 
 import co.com.sofka.domain.generic.Command;
 import java.util.Map;
-import org.example.game.entities.Player;
 
 public class CreateGameCommand extends Command {
 
@@ -10,9 +9,9 @@ public class CreateGameCommand extends Command {
 
   private Map<String, String> players;
 
-  private Player mainPlayer;
+  private String mainPlayer;
 
-  public CreateGameCommand(String gameId, Map<String, String> players, Player mainPlayer) {
+  public CreateGameCommand(String gameId, Map<String, String> players, String mainPlayer) {
     this.gameId = gameId;
     this.players = players;
     this.mainPlayer = mainPlayer;
@@ -20,10 +19,6 @@ public class CreateGameCommand extends Command {
 
   public String getGameId() {
     return gameId;
-  }
-
-  public void setGameId(String gameId) {
-    this.gameId = gameId;
   }
 
   public Map<String, String> getPlayers() {
@@ -34,11 +29,7 @@ public class CreateGameCommand extends Command {
     this.players = players;
   }
 
-  public Player getMainPlayer() {
+  public String getMainPlayer() {
     return mainPlayer;
-  }
-
-  public void setMainPlayer(Player mainPlayer) {
-    this.mainPlayer = mainPlayer;
   }
 }

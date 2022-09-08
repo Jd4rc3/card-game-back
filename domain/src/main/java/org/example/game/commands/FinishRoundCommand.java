@@ -2,7 +2,6 @@ package org.example.game.commands;
 
 import co.com.sofka.domain.generic.Command;
 import java.util.Set;
-import org.example.game.entities.Player;
 import org.example.game.values.BoardId;
 import org.example.game.values.GameId;
 import org.example.game.values.PlayerId;

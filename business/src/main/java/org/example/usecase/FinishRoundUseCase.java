@@ -24,6 +24,7 @@ public class FinishRoundUseCase extends UseCaseForCommand<FinishRoundCommand> {
             .flatMapIterable(event -> {
               var game = Game.from(GameId.of(command.getGameId().value()), event);
               game.finishRound(command.getBoardId(), command.getPlayers());
+
               return game.getUncommittedChanges();
             }));
   }

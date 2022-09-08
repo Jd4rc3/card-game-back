@@ -12,6 +12,7 @@
     <module>domain</module>
     <module>business</module>
     <module>application/app-service</module>
+    <module>application/app-proxy</module>
   </modules>
 
   <properties>

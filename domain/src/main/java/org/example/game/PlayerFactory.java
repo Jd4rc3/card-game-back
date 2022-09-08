@@ -1,6 +1,7 @@
 package org.example.game;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import org.example.game.entities.Player;
 import org.example.game.values.Deck;
@@ -11,7 +12,7 @@ public class PlayerFactory {
   private final Set<Player> players;
 
   public PlayerFactory() {
-    players = new HashSet<>();
+    players = new LinkedHashSet<>();
   }
 
   public void addPlayer(PlayerId playerId, String alias, Deck deck) {
