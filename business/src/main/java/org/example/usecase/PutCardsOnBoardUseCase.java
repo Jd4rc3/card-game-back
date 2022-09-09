@@ -35,10 +35,12 @@ public class PutCardsOnBoardUseCase extends UseCaseForCommand<PutCardOnBoardComm
 
                   var amount = (long) game.board().match()
                       .get(playerId).size();
+
                   if (amount > 1) {
                     throw new IllegalArgumentException(
                         "You can't put more than 1 card on the board");
                   }
+
                   game.putCardOnBoard(boardId, playerId, selectedCard);
                   return game.getUncommittedChanges();
                 }));

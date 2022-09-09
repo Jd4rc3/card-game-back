@@ -2,9 +2,11 @@ package org.example.game;
 
 import co.com.sofka.domain.generic.AggregateEvent;
 import co.com.sofka.domain.generic.DomainEvent;
+import co.com.sofka.domain.generic.Entity;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.example.game.entities.Board;
 import org.example.game.entities.Player;
 import org.example.game.events.BoardCreated;
@@ -100,6 +102,10 @@ public class Game extends AggregateEvent<GameId> {
 
   public Round round() {
     return round;
+  }
+
+  public PlayerId mainPlayer() {
+    return mainPlayer;
   }
 
   public Board board() {
