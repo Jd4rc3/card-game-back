@@ -1,5 +1,6 @@
 package org.example.cardgame.application;
 
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -32,7 +33,7 @@ public class ApplicationConfig {
   @Bean
   public CorsWebFilter corsWebFilter() {
     CorsConfiguration corsConfig = new CorsConfiguration();
-    corsConfig.setAllowedOrigins(List.of("*"));
+    corsConfig.setAllowedOrigins(Arrays.asList("*"));
     corsConfig.setMaxAge(8000L);
     corsConfig.addAllowedHeader("*");
     corsConfig.addAllowedMethod("*");
