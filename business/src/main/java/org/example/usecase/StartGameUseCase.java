@@ -24,10 +24,10 @@ public class StartGameUseCase extends UseCaseForCommand<StartGameCommand> {
             .collectList()
             .flatMapIterable(event -> {
               var game = Game.from(GameId.of(command.getGameId()), event);
-              game.createBoard();
               var playersIds = game.players().keySet();
               var round = new Round(1, playersIds);
 
+              game.createBoard();
               game.createRound(round, 80);
 
               return game.getUncommittedChanges();

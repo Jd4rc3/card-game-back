@@ -12,6 +12,9 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+application/app-proxy/target
+application/app-service/target
+
 # AWS User-specific
 .idea/**/aws.xml
 

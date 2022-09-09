@@ -12,13 +12,11 @@ public class StoredEvent {
   public StoredEvent() {
   }
 
-
   public StoredEvent(String typeName, Date occurredOn, String eventBody) {
     this.setEventBody(eventBody);
     this.setOccurredOn(occurredOn);
     this.setTypeName(typeName);
   }
-
 
   public static StoredEvent wrapEvent(DomainEvent domainEvent, EventSerializer eventSerializer) {
     return new StoredEvent(domainEvent.getClass().getCanonicalName(),
@@ -27,36 +25,29 @@ public class StoredEvent {
     );
   }
 
-
   public String getEventBody() {
     return eventBody;
   }
-
 
   public void setEventBody(String eventBody) {
     this.eventBody = eventBody;
   }
 
-
   public Date getOccurredOn() {
     return occurredOn;
   }
-
 
   public void setOccurredOn(Date occurredOn) {
     this.occurredOn = occurredOn;
   }
 
-
   public String getTypeName() {
     return typeName;
   }
 
-
   public void setTypeName(String typeName) {
     this.typeName = typeName;
   }
-
 
   public DomainEvent deserializeEvent(EventSerializer eventSerializer) {
     try {
@@ -67,7 +58,6 @@ public class StoredEvent {
     }
   }
 
-
   public interface EventSerializer {
 
     <T extends DomainEvent> T deserialize(String aSerialization, final Class<?> aType);
@@ -75,4 +65,3 @@ public class StoredEvent {
     String serialize(DomainEvent object);
   }
 }
-

@@ -16,12 +16,6 @@ import javax.websocket.server.ServerEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * { "juegoId": { "uuid1": Session, "uuid2": Session, "uuidN": Session, } }
- * <p>
- * session[juegoId][uuid]
- */
-
 @Component
 @ServerEndpoint("/retrieve/{correlationId}")
 public class SocketController {
@@ -48,8 +42,7 @@ public class SocketController {
   @OnClose
   public void onClose(Session session, @PathParam("correlationId") String correlationId) {
     sessions.get(correlationId).remove(session.getId());
-    logger.info("Desconnect by " + correlationId);
-
+    logger.info("Disconnect by " + correlationId);
   }
 
   @OnError
@@ -63,6 +56,7 @@ public class SocketController {
   public void send(String correlationId, DomainEvent event) {
 
     var message = serialize.serialize(event);
+    logger.info("laskdjlakdjlkasdj: " + event);
     if (Objects.nonNull(correlationId) && sessions.containsKey(correlationId)) {
       logger.info("send from " + correlationId);
 

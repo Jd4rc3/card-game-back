@@ -1,6 +1,5 @@
 package org.example.cardgame.websocket.adapters.bus;
 
-
 import org.example.cardgame.websocket.ApplicationConfig;
 import org.example.cardgame.websocket.GsonEventSerializer;
 import org.example.cardgame.websocket.SocketController;
@@ -10,7 +9,6 @@ import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
-
 
 @Component
 public class RabbitMQEventConsumer {
@@ -24,11 +22,10 @@ public class RabbitMQEventConsumer {
     this.ws = ws;
   }
 
-
   @RabbitListener(bindings = @QueueBinding(
       value = @Queue(value = "proxy.handles", durable = "true"),
       exchange = @Exchange(value = ApplicationConfig.EXCHANGE, type = "topic"),
-      key = "cardgame.#"
+      key = "game.#"
   ))
   public void receivedMessage(Message<String> message) {
     var notification = Notification.from(message.getPayload());
@@ -41,6 +38,4 @@ public class RabbitMQEventConsumer {
       e.printStackTrace();
     }
   }
-
-
 }

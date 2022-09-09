@@ -17,6 +17,9 @@ public class CreateGameCommand extends Command {
     this.mainPlayer = mainPlayer;
   }
 
+  public CreateGameCommand() {
+  }
+
   public String getGameId() {
     return gameId;
   }

@@ -13,7 +13,6 @@ public class ApplicationConfig {
 
   public static final String EXCHANGE = "core-game";
 
-
   @Bean
   public RabbitAdmin rabbitAdmin(RabbitTemplate rabbitTemplate) {
     var admin = new RabbitAdmin(rabbitTemplate);
@@ -25,5 +24,4 @@ public class ApplicationConfig {
   public ServerEndpointExporter serverEndpointExporter() {
     return new ServerEndpointExporter();
   }
-
 }

@@ -10,7 +10,7 @@ public class GameCreated extends
 
 
   public GameCreated(PlayerId mainPlayer) {
-    super("game.GameCreated");
+    super("game.gamecreated");
     this.mainPlayer = mainPlayer;
   }
 

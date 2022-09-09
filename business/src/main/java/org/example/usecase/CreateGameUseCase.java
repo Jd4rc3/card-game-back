@@ -2,6 +2,7 @@ package org.example.usecase;
 
 import co.com.sofka.business.generic.BusinessException;
 import co.com.sofka.domain.generic.DomainEvent;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -50,6 +51,7 @@ public class CreateGameUseCase extends UseCaseForCommand<CreateGameCommand> {
 
                   createGameCommand.getPlayers()
                       .forEach((id, alias) -> {
+
                         var deck = assignCardsToPlayer(cardsGame);
 
                         deck.forEach(card -> cardsGame.removeIf(
@@ -72,12 +74,13 @@ public class CreateGameUseCase extends UseCaseForCommand<CreateGameCommand> {
     return masterCardList.stream()
         .map(masterCard -> new Card(MasterCardId.of(masterCard.getId()),
             true, true
-        )).toList();
+        )).collect(Collectors.toList());
   }
 
   private Set<Card> assignCardsToPlayer(List<Card> cards) {
-    Collections.shuffle(cards);
+    var clonedCards = new ArrayList<>(cards);
+    Collections.shuffle(clonedCards);
 
-    return cards.stream().limit(CARDS_PER_PLAYER).collect(Collectors.toSet());
+    return clonedCards.stream().limit(CARDS_PER_PLAYER).collect(Collectors.toSet());
   }
 }

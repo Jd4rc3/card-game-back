@@ -19,6 +19,10 @@ public class Notification {
     this(null, null);
   }
 
+  public static Notification from(String aNotification) {
+    return new Notification().deserialize(aNotification);
+  }
+
   public String getType() {
     return type;
   }
@@ -37,9 +41,5 @@ public class Notification {
 
   public String serialize() {
     return new Gson().toJson(this);
-  }
-
-  public static Notification from(String aNotification) {
-    return new Notification().deserialize(aNotification);
   }
 }
