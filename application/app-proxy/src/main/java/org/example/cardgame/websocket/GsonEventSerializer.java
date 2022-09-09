@@ -1,8 +1,8 @@
-package org.example;
+package org.example.cardgame.websocket;
 
 import co.com.sofka.domain.generic.DomainEvent;
 import com.google.gson.Gson;
-import org.example.generic.StoredEvent;
+import org.example.cardgame.websocket.generic.StoredEvent;
 import org.springframework.stereotype.Component;
 
 @Component

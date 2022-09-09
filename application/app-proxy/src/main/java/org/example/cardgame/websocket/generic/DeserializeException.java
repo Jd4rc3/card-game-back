@@ -1,4 +1,4 @@
-package org.example.generic;
+package org.example.cardgame.websocket.generic;
 
 public class DeserializeException extends RuntimeException {
 

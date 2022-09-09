@@ -1,4 +1,4 @@
-package org.example.bus;
+package org.example.cardgame.websocket.adapters.bus;
 
 import com.google.gson.Gson;
 import java.time.Instant;

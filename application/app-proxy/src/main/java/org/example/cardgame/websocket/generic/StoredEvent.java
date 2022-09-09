@@ -1,4 +1,4 @@
-package org.example.generic;
+package org.example.cardgame.websocket.generic;
 
 import co.com.sofka.domain.generic.DomainEvent;
 import java.util.Date;
@@ -75,3 +75,4 @@ public class StoredEvent {
     String serialize(DomainEvent object);
   }
 }
+

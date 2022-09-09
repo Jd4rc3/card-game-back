@@ -1,10 +1,12 @@
-package org.example;
+package org.example.cardgame.websocket;
 
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
+
 
 @Configuration
 public class ApplicationConfig {
@@ -18,4 +20,10 @@ public class ApplicationConfig {
     admin.declareExchange(new TopicExchange(EXCHANGE));
     return admin;
   }
+
+  @Bean
+  public ServerEndpointExporter serverEndpointExporter() {
+    return new ServerEndpointExporter();
+  }
+
 }

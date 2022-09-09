@@ -1,36 +1,45 @@
-package org.example;
+package org.example.cardgame.websocket;
 
 import co.com.sofka.domain.generic.DomainEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * { "juegoId": { "uuid1": Session, "uuid2": Session, "uuidN": Session, } }
+ * <p>
+ * session[juegoId][uuid]
+ */
+
 @Component
-@Slf4j
 @ServerEndpoint("/retrieve/{correlationId}")
 public class SocketController {
 
-  private final Map<String, Map<String, Session>> sessions;
+  private static final Logger logger = Logger.getLogger(SocketController.class.getName());
+  private static Map<String, Map<String, Session>> sessions;
   @Autowired
   private GsonEventSerializer serialize;
 
   public SocketController() {
-    Objects.requireNonNull(sessions = new ConcurrentHashMap<>());
+    if (Objects.isNull(sessions)) {
+      sessions = new ConcurrentHashMap<>();
+    }
   }
 
   @OnOpen
   public void onOpen(Session session, @PathParam("correlationId") String correlationId) {
-    log.info("Connect by " + correlationId);
+    logger.info("Connect by " + correlationId);
     var map = sessions.getOrDefault(correlationId, new HashMap<>());
     map.put(session.getId(), session);
     sessions.put(correlationId, map);
@@ -39,7 +48,7 @@ public class SocketController {
   @OnClose
   public void onClose(Session session, @PathParam("correlationId") String correlationId) {
     sessions.get(correlationId).remove(session.getId());
-    log.info("Disconnect by " + correlationId);
+    logger.info("Desconnect by " + correlationId);
 
   }
 
@@ -47,7 +56,7 @@ public class SocketController {
   public void onError(Session session, @PathParam("correlationId") String correlationId,
       Throwable throwable) {
     sessions.get(correlationId).remove(session.getId());
-    log.error(throwable.getMessage());
+    logger.log(Level.SEVERE, throwable.getMessage());
 
   }
 
@@ -55,14 +64,14 @@ public class SocketController {
 
     var message = serialize.serialize(event);
     if (Objects.nonNull(correlationId) && sessions.containsKey(correlationId)) {
-      log.info("send from " + correlationId);
+      logger.info("send from " + correlationId);
 
       sessions.get(correlationId).values()
           .forEach(session -> {
             try {
               session.getAsyncRemote().sendText(message);
             } catch (RuntimeException e) {
-              log.info(e.getMessage(), e);
+              logger.log(Level.SEVERE, e.getMessage(), e);
             }
           });
     }

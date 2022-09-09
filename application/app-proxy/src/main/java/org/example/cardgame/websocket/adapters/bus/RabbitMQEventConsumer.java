@@ -1,8 +1,9 @@
-package org.example.bus;
+package org.example.cardgame.websocket.adapters.bus;
 
-import org.example.ApplicationConfig;
-import org.example.GsonEventSerializer;
-import org.example.SocketController;
+
+import org.example.cardgame.websocket.ApplicationConfig;
+import org.example.cardgame.websocket.GsonEventSerializer;
+import org.example.cardgame.websocket.SocketController;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
@@ -10,21 +11,22 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class RabbitMQEventConsumer {
 
   private final GsonEventSerializer serializer;
 
-  private final SocketController controller;
+  private final SocketController ws;
 
-  public RabbitMQEventConsumer(GsonEventSerializer serializer, SocketController controller) {
+  public RabbitMQEventConsumer(GsonEventSerializer serializer, SocketController ws) {
     this.serializer = serializer;
-    this.controller = controller;
+    this.ws = ws;
   }
 
 
   @RabbitListener(bindings = @QueueBinding(
-      value = @Queue(value = "juego.websocket", durable = "true"),
+      value = @Queue(value = "proxy.handles", durable = "true"),
       exchange = @Exchange(value = ApplicationConfig.EXCHANGE, type = "topic"),
       key = "cardgame.#"
   ))
@@ -34,9 +36,11 @@ public class RabbitMQEventConsumer {
       var event = serializer.deserialize(
           notification.getBody(), Class.forName(notification.getType())
       );
-      controller.send(event.aggregateRootId(), event);
+      ws.send(event.aggregateRootId(), event);
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
     }
   }
+
+
 }
