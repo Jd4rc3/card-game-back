@@ -27,25 +27,24 @@ public class GameMaterializeHandle {
   public void handleJuegoCreado(GameCreated event) {
     var data = new HashMap<>();
     data.put("_id", event.aggregateRootId());
-    data.put("Date", Instant.now());
+    data.put("date", Instant.now());
     data.put("uid", event.getMainPlayer().value());
-    data.put("stared", false);
+    data.put("started", false);
     data.put("finished", false);
-    data.put("NumberOfPlayers", 0);
+    data.put("numberOfPlayers", 0);
     data.put("players", new HashMap<>());
+    System.out.println(data + " <-----------------");
     template.save(data, COLLECTION_VIEW).block();
   }
 
   @EventListener
   public void handleJugadorAgregado(PlayerAdded event) {
     var data = new Update();
-    data.set("Date", Instant.now());
-    data.set("Players." + event.getIdentity().value() + ".alias", event.getAlias())
-        .set("players." + event.getIdentity().value() + ".playerId",
-            event.getIdentity().value());
-
-    data.inc("NumberOfPlayers");
-
+    data.set("date", Instant.now());
+    data.set("players." + event.getIdentity().value() + ".alias", event.getAlias());
+    data.set("players." + event.getIdentity().value() + ".playerId",
+        event.getIdentity().value());
+    data.inc("numberOfPlayers");
     template.updateFirst(getFilterByAggregateId(event), data, COLLECTION_VIEW).block();
   }
 
@@ -54,4 +53,5 @@ public class GameMaterializeHandle {
         Criteria.where("_id").is(event.aggregateRootId())
     );
   }
+
 }

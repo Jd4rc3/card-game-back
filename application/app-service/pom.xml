@@ -15,8 +15,14 @@
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-amqp</artifactId>
+      <artifactId>spring-boot-starter-web</artifactId>
       <version>${springboot.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -33,37 +39,34 @@
       <artifactId>spring-boot-starter-webflux</artifactId>
       <version>${springboot.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
+      <artifactId>spring-boot-starter-amqp</artifactId>
       <version>${springboot.version}</version>
-      <scope>test</scope>
     </dependency>
-
-    <!--<dependency>
-      <groupId>io.projectreactor</groupId>
-      <artifactId>reactor-test</artifactId>
-      <scope>test</scope>
-    </dependency>-->
-
-    <!--    <dependency>
-          <groupId>org.springframework.amqp</groupId>
-          <artifactId>spring-rabbit-test</artifactId>
-          <scope>test</scope>
-        </dependency>-->
 
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>2.9.0</version>
+      <version>2.8.8</version>
     </dependency>
 
     <dependency>
-      <groupId>org.example</groupId>
       <artifactId>business</artifactId>
+      <groupId>org.example</groupId>
       <version>1.0-SNAPSHOT</version>
-      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.7.1</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
