@@ -12,9 +12,8 @@ public class CreateRoundCommand extends Command {
 
   private Set<String> players;
 
-  public CreateRoundCommand(GameId gameId, Integer time, Set<String> players) {
+  public CreateRoundCommand(GameId gameId, Set<String> players) {
     this.gameId = gameId;
-    this.time = time;
     this.players = players;
   }
 

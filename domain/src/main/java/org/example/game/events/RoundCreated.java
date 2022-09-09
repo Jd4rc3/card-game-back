@@ -21,4 +21,12 @@ public class RoundCreated extends DomainEvent {
   public Integer getTime() {
     return time;
   }
+
+  @Override
+  public String toString() {
+    return "RoundCreated{" +
+        "round=" + round +
+        ", time=" + time +
+        '}';
+  }
 }

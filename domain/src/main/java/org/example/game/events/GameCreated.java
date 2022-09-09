@@ -8,7 +8,6 @@ public class GameCreated extends
 
   private final PlayerId mainPlayer;
 
-
   public GameCreated(PlayerId mainPlayer) {
     super("game.gamecreated");
     this.mainPlayer = mainPlayer;

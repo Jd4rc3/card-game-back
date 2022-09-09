@@ -30,8 +30,12 @@ public class CreateRoundUseCase extends UseCaseForCommand<CreateRoundCommand> {
               var players = command.getPlayers().stream()
                   .map(PlayerId::of)
                   .collect(Collectors.toSet());
-              var round = new Round(1, players);
-              game.createRound(round, command.getTime());
+
+              if (game.round() == null) {
+                game.createRound(new Round(1, players), command.getTime());
+              }
+
+              game.round().incrementRound(players);
 
               return game.getUncommittedChanges();
             })
