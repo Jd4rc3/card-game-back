@@ -13,14 +13,14 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 @Configuration
-public class GameMaterializeHandle {
+public class GameMaterializeHandler {
 
   private static final String COLLECTION_VIEW = "gameview";
 
   private final ReactiveMongoTemplate template;
 
 
-  public GameMaterializeHandle(ReactiveMongoTemplate template) {
+  public GameMaterializeHandler(ReactiveMongoTemplate template) {
     this.template = template;
   }
 

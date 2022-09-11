@@ -6,6 +6,9 @@ public class StartGameCommand extends Command {
 
   private String gameId;
 
+  public StartGameCommand() {
+  }
+
   public StartGameCommand(String gameId) {
     this.gameId = gameId;
   }

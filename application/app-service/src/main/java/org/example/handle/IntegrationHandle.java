@@ -27,7 +27,7 @@ public class IntegrationHandle implements Function<Flux<DomainEvent>, Mono<Void>
   }
 
   public Mono<Void> publishError(Throwable errorEvent) {
-    return Mono.create((callback) -> {
+    return Mono.create(callback -> {
       eventBus.publishError(errorEvent);
       callback.success();
     });
