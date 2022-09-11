@@ -49,7 +49,7 @@ public class PutCardsOnBoardUseCase extends UseCaseForCommand<PutCardOnBoardComm
   private Card selectCard(String cardId, Set<Card> cardsOfThePlayer) {
     return cardsOfThePlayer
         .stream()
-        .filter(c -> c.value().cardId().value().equals(cardId))
+        .filter(c -> c.value().cardId().equals(cardId))
         .findFirst()
         .orElseThrow();
   }

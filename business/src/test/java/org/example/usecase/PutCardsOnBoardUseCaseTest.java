@@ -57,20 +57,20 @@ class PutCardsOnBoardUseCaseTest {
           var cardPutOnBoard = (CardPutOnBoard) event;
           Assertions.assertEquals("p01", cardPutOnBoard.getPlayerId().value());
 
-          return command.getCardId().equals(cardPutOnBoard.getCard().value().cardId().value());
+          return command.getCardId().equals(cardPutOnBoard.getCard().value().cardId());
         })
         .expectNextMatches(event -> {
           var cardPutOnBoard = (CardRemovedFromDeck) event;
           Assertions.assertEquals("p01", cardPutOnBoard.getPlayerId().value());
 
-          return command.getCardId().equals(cardPutOnBoard.getCard().value().cardId().value());
+          return command.getCardId().equals(cardPutOnBoard.getCard().value().cardId());
         })
         .expectComplete()
         .verify();
   }
 
   private Flux<DomainEvent> history() {
-    var carta = new Card(MasterCardId.of("1"), true, true, 1);
+    var carta = new Card(MasterCardId.of("1"), true, true, 1, "zxc");
     var cards = Set.of(carta);
     var deck1 = new Deck(cards);
     var deck2 = new Deck(cards);

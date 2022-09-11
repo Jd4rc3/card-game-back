@@ -47,8 +47,8 @@ public class QueryHandle {
   @Bean
   public RouterFunction<ServerResponse> findDeck() {
     return RouterFunctions.route(
-        GET("/decks/{uid}"),
-        request -> template.find(filterByUId(request.pathVariable("uid")), DeckViewModel.class,
+        GET("/deck/{playerId}"),
+        request -> template.find(filterByUId(request.pathVariable("playerId")), DeckViewModel.class,
                 "deckview")
             .collectList()
             .flatMap(list -> ServerResponse.ok()
@@ -57,6 +57,11 @@ public class QueryHandle {
                 .onErrorResume(errorHandler::error))
     );
   }
+
+/*  private Query filterByUId(String uid, String gameId) {
+    return new Query(Criteria.where("uid").is(uid).and("_id").is(gameId));
+  }*/
+
 
   private Query filterByUId(String uid) {
     return new Query(Criteria.where("uid").is(uid));

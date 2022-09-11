@@ -56,7 +56,7 @@ class StartGameUseCaseTest {
   }
 
   private Flux<DomainEvent> history() {
-    var card = new Card(MasterCardId.of("1"), true, true, 1);
+    var card = new Card(MasterCardId.of("1"), true, true, 1, "zxc");
 
     var cards = Set.of(card);
 

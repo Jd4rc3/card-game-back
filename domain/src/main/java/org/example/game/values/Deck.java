@@ -23,10 +23,10 @@ public class Deck implements ValueObject<Deck.Props> {
   }
 
   public Deck removeCard(Card card) {
-    var cardId = card.value().cardId().value();
+    var cardId = card.value().cardId();
     var newDeck = this.cards.stream()
-            .filter(carta -> !cardId.equals(carta.value().cardId().value()))
-            .collect(Collectors.toCollection(HashSet::new));
+        .filter(carta -> !cardId.equals(carta.value().cardId()))
+        .collect(Collectors.toCollection(HashSet::new));
     return new Deck(newDeck);
   }
 

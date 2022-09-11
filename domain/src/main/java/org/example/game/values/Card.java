@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Card implements ValueObject<Card.Props>, Comparable<Card> {
 
-  private final MasterCardId cardId;
+  private final String cardId;
 
   private final Boolean isHidden;
 
@@ -13,18 +13,21 @@ public class Card implements ValueObject<Card.Props>, Comparable<Card> {
 
   private final Integer power;
 
-  public Card(MasterCardId cardId, Boolean isHidden, Boolean isEnable, Integer power) {
-    this.cardId = cardId;
+  private final String uri;
+
+  public Card(MasterCardId cardId, Boolean isHidden, Boolean isEnable, Integer power, String uri) {
+    this.cardId = cardId.value();
     this.isHidden = isHidden;
     this.isEnable = isEnable;
     this.power = power;
+    this.uri = uri;
   }
 
   @Override
   public Props value() {
     return new Props() {
       @Override
-      public MasterCardId cardId() {
+      public String cardId() {
         return cardId;
       }
 
@@ -41,6 +44,11 @@ public class Card implements ValueObject<Card.Props>, Comparable<Card> {
       @Override
       public Boolean isEnable() {
         return isEnable;
+      }
+
+      @Override
+      public String uri() {
+        return uri;
       }
     };
   }
@@ -74,12 +82,14 @@ public class Card implements ValueObject<Card.Props>, Comparable<Card> {
 
   public interface Props {
 
-    MasterCardId cardId();
+    String cardId();
 
     Integer power();
 
     Boolean isHidden();
 
     Boolean isEnable();
+
+    String uri();
   }
 }
