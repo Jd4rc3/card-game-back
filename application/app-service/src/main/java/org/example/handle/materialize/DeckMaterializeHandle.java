@@ -26,7 +26,8 @@ public class DeckMaterializeHandle {
     data.put("date", Instant.now());
     data.put("uid", playerAdded.getIdentity().value());
     data.put("alias", playerAdded.getAlias());
-    data.put("deck", playerAdded.getDeck());
+    data.put("numberOfCards", playerAdded.getDeck().value().quantity());
+    data.put("deck", playerAdded.getDeck().value().cards());
 
     template.save(data, COLLECTION_VIEW).block();
   }

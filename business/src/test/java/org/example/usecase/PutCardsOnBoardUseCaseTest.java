@@ -70,7 +70,7 @@ class PutCardsOnBoardUseCaseTest {
   }
 
   private Flux<DomainEvent> history() {
-    var carta = new Card(MasterCardId.of("1"), true, true);
+    var carta = new Card(MasterCardId.of("1"), true, true, 1);
     var cards = Set.of(carta);
     var deck1 = new Deck(cards);
     var deck2 = new Deck(cards);

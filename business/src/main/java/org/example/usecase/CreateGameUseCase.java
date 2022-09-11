@@ -73,8 +73,8 @@ public class CreateGameUseCase extends UseCaseForCommand<CreateGameCommand> {
   private List<Card> buildCards(List<MasterCard> masterCardList) {
     return masterCardList.stream()
         .map(masterCard -> new Card(MasterCardId.of(masterCard.getId()),
-            true, true
-        )).collect(Collectors.toList());
+            true, true,
+            masterCard.getPower())).collect(Collectors.toList());
   }
 
   private Set<Card> assignCardsToPlayer(List<Card> cards) {

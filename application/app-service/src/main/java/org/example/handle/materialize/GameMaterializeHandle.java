@@ -1,11 +1,16 @@
 package org.example.handle.materialize;
 
+import co.com.sofka.domain.generic.DomainEvent;
 import java.time.Instant;
 import java.util.HashMap;
 import org.example.game.events.GameCreated;
+import org.example.game.events.PlayerAdded;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 @Configuration
 public class GameMaterializeHandle {
@@ -32,5 +37,25 @@ public class GameMaterializeHandle {
     data.put("players", new HashMap<>());
 
     template.save(data, COLLECTION_VIEW).block();
+  }
+
+  @EventListener
+  public void handlePlayerAdded(PlayerAdded event) {
+    var data = new Update();
+
+    data.set("data", Instant.now());
+    data.set(String.format("players.%s.alias", event.getIdentity().value()), event.getAlias());
+    data.set(String.format("players.%s.playerId", event.getIdentity().value()),
+        event.getIdentity().value());
+    data.set(String.format("players.%s.alias", event.getIdentity().value()), event.getAlias());
+
+    data.inc("numberOfPlayers");
+
+    template.updateFirst(getFilterByAggregateId(event), data, COLLECTION_VIEW)
+        .block();
+  }
+
+  private Query getFilterByAggregateId(DomainEvent event) {
+    return new Query(Criteria.where("_id").is(event.aggregateRootId()));
   }
 }
