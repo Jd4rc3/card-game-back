@@ -61,7 +61,7 @@ public class CreateGameUseCase extends UseCaseForCommand<CreateGameCommand> {
                       });
 
                   var game = new Game(GameId.of(createGameCommand.getGameId()),
-                      PlayerId.of(createGameCommand.getMainPlayer()),
+                      PlayerId.of(createGameCommand.getMainPlayerId()),
                       factory
                   );
 

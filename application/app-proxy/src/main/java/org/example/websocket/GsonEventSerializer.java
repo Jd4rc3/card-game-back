@@ -3,7 +3,9 @@ package org.example.websocket;
 import co.com.sofka.domain.generic.DomainEvent;
 import com.google.gson.Gson;
 import org.example.websocket.generic.StoredEvent;
+import org.springframework.stereotype.Component;
 
+@Component
 public class GsonEventSerializer implements StoredEvent.EventSerializer {
 
   @Override

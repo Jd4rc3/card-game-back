@@ -18,6 +18,6 @@ public class MasterCardsService implements CardsListService {
 
   @Override
   public Flux<MasterCard> getCardsFromMarvel() {
-    return null;
+    return template.findAll(MasterCard.class, "cards");
   }
 }

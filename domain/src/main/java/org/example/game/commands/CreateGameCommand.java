@@ -9,12 +9,12 @@ public class CreateGameCommand extends Command {
 
   private Map<String, String> players;
 
-  private String mainPlayer;
+  private String mainPlayerId;
 
-  public CreateGameCommand(String gameId, Map<String, String> players, String mainPlayer) {
+  public CreateGameCommand(String gameId, Map<String, String> players, String mainPlayerId) {
     this.gameId = gameId;
     this.players = players;
-    this.mainPlayer = mainPlayer;
+    this.mainPlayerId = mainPlayerId;
   }
 
   public CreateGameCommand() {
@@ -32,7 +32,7 @@ public class CreateGameCommand extends Command {
     this.players = players;
   }
 
-  public String getMainPlayer() {
-    return mainPlayer;
+  public String getMainPlayerId() {
+    return mainPlayerId;
   }
 }

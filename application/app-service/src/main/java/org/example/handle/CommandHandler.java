@@ -4,6 +4,7 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.game.commands.CreateGameCommand;
 import org.example.usecase.CreateGameUseCase;
 import org.springframework.context.annotation.Bean;
@@ -13,13 +14,14 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 @Configuration
-public class CommandHandle {
+@Slf4j
+public class CommandHandler {
 
   private final IntegrationHandle integrationHandle;
 
   private final ErrorHandler errorHandler;
 
-  public CommandHandle(IntegrationHandle integrationHandle, ErrorHandler errorHandler) {
+  public CommandHandler(IntegrationHandle integrationHandle, ErrorHandler errorHandler) {
     this.integrationHandle = integrationHandle;
     this.errorHandler = errorHandler;
   }

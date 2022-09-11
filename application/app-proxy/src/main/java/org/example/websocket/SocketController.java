@@ -12,6 +12,7 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -21,7 +22,8 @@ public class SocketController {
 
   private static Map<String, Map<String, Session>> sessions;
 
-  private GsonEventSerializer serialize;
+  @Autowired
+  private GsonEventSerializer serializer;
 
   public SocketController() {
     if (Objects.isNull(sessions)) {
@@ -53,7 +55,7 @@ public class SocketController {
   }
 
   public void send(String correlationId, DomainEvent event) {
-    var message = serialize.serialize(event);
+    var message = serializer.serialize(event);
 
     if (Objects.nonNull(correlationId) && sessions.containsKey(correlationId)) {
       log.info("send from {}", correlationId);
@@ -70,5 +72,4 @@ public class SocketController {
           });
     }
   }
-
 }

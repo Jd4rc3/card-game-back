@@ -73,7 +73,7 @@ class CreateGameUseCaseTest {
         new MasterCard("card-008", "test #8"),
         new MasterCard("card-009", "test #9"),
         new MasterCard("card-010", "test #10"),
-        new MasterCard("card-010", "test #10")
+        new MasterCard("card-011", "test #11")
     );
   }
 }
