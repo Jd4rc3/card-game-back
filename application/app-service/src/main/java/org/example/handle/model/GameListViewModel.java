@@ -3,6 +3,7 @@ package org.example.handle.model;
 import java.util.Map;
 import lombok.Data;
 
+@Data
 public class GameListViewModel {
 
   private String id;
@@ -15,7 +16,7 @@ public class GameListViewModel {
 
   private Integer numberOfPlayers;
 
-  private Map<String, Player> players;
+  private Map<String, String> players;
 
   private Player winner;
 

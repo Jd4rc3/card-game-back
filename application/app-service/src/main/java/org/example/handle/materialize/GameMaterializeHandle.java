@@ -43,11 +43,8 @@ public class GameMaterializeHandle {
   public void handlePlayerAdded(PlayerAdded event) {
     var data = new Update();
 
-    data.set("data", Instant.now());
-    data.set(String.format("players.%s.alias", event.getIdentity().value()), event.getAlias());
-    data.set(String.format("players.%s.playerId", event.getIdentity().value()),
-        event.getIdentity().value());
-    data.set(String.format("players.%s.alias", event.getIdentity().value()), event.getAlias());
+    data.set("date", Instant.now());
+    data.set(String.format("players.%s", event.getIdentity().value()), event.getAlias());
 
     data.inc("numberOfPlayers");
 
