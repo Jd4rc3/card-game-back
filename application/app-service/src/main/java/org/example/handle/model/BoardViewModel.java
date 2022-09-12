@@ -9,30 +9,22 @@ import org.example.handle.model.DeckViewModel.Card;
 @Data
 public class BoardViewModel {
 
-  private Board board;
-
-  private Integer time;
+  private String boardId;
 
   private Round round;
 
-  @Data
-  public static class Board {
+  private Set<String> players;
 
-    private String id;
-
-    private Set<String> players;
-
-    private Boolean isEnable;
-
-    private Map<String, List<Card>> cards;
-  }
+  private Map<String, List<Card>> cards;
 
   @Data
   public static class Round {
 
-    private Set<String> players;
+    private Integer time;
 
-    private String number;
+    private Set<String> playersAlive;
+
+    private Integer number;
 
     private Boolean isStarted;
   }

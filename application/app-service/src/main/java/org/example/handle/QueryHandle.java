@@ -2,6 +2,7 @@ package org.example.handle;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 
+import org.example.handle.model.BoardViewModel;
 import org.example.handle.model.DeckViewModel;
 import org.example.handle.model.GameListViewModel;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +41,22 @@ public class QueryHandle {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(
                     BodyInserters.fromPublisher(Flux.fromIterable(list), GameListViewModel.class)))
+            .onErrorResume(errorHandler::error)
+    );
+  }
+
+  @Bean
+  public RouterFunction<ServerResponse> getBoard() {
+    return RouterFunctions.route(
+        GET("/{gameId}/board"),
+
+        request -> template.findOne(
+                Query.query(Criteria.where("_id").is(request.pathVariable("gameId"))),
+                BoardViewModel.class,
+                "boardview")
+            .flatMap(deck -> ServerResponse.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromPublisher(Flux.just(deck), BoardViewModel.class)))
             .onErrorResume(errorHandler::error)
     );
   }
