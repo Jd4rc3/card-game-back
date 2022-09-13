@@ -16,6 +16,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Configuration
 public class QueryHandle {
@@ -51,12 +52,12 @@ public class QueryHandle {
         GET("/{gameId}/board"),
 
         request -> template.findOne(
-                Query.query(Criteria.where("_id").is(request.pathVariable("gameId"))),
+                filterByGameId(request.pathVariable("gameId")),
                 BoardViewModel.class,
                 "boardview")
             .flatMap(deck -> ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromPublisher(Flux.just(deck), BoardViewModel.class)))
+                .body(BodyInserters.fromPublisher(Mono.just(deck), BoardViewModel.class)))
             .onErrorResume(errorHandler::error)
     );
   }
@@ -64,23 +65,23 @@ public class QueryHandle {
   @Bean
   public RouterFunction<ServerResponse> findDeck() {
     return RouterFunctions.route(
-        GET("/deck/{playerId}"),
-        request -> template.find(filterByUId(request.pathVariable("playerId")), DeckViewModel.class,
+        GET("/deck/{playerId}/{gameId}"),
+        request -> template.findOne(
+                filterByUIdAndGameId(request.pathVariable("playerId"), request.pathVariable("gameId")),
+                DeckViewModel.class,
                 "deckview")
-            .collectList()
             .flatMap(list -> ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(BodyInserters.fromPublisher(Flux.fromIterable(list), DeckViewModel.class))
+                .body(BodyInserters.fromPublisher(Mono.just(list), DeckViewModel.class))
                 .onErrorResume(errorHandler::error))
     );
   }
 
-/*  private Query filterByUId(String uid, String gameId) {
-    return new Query(Criteria.where("uid").is(uid).and("_id").is(gameId));
-  }*/
+  private Query filterByUIdAndGameId(String uid, String gameId) {
+    return new Query(Criteria.where("uid").is(uid).and("gameId").is(gameId));
+  }
 
-
-  private Query filterByUId(String uid) {
-    return new Query(Criteria.where("uid").is(uid));
+  private Query filterByGameId(String gameId) {
+    return new Query(Criteria.where("_id").is(gameId));
   }
 }

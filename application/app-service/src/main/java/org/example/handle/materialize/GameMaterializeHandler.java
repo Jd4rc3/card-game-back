@@ -27,6 +27,10 @@ public class GameMaterializeHandler {
   @EventListener
   public void handleCreatedGames(GameCreated gameCreated) {
     var data = new HashMap<>();
+    var board = new HashMap<>();
+
+    board.put("mainPlayerId", gameCreated.getMainPlayer().value());
+    board.put("_id", gameCreated.aggregateRootId());
 
     data.put("_id", gameCreated.aggregateRootId());
     data.put("date", Instant.now());
@@ -37,6 +41,7 @@ public class GameMaterializeHandler {
     data.put("players", new HashMap<>());
 
     template.save(data, COLLECTION_VIEW).block();
+    template.save(board, "boardview").block();
   }
 
   @EventListener

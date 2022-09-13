@@ -5,6 +5,7 @@ import co.com.sofka.domain.generic.Identity;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.stream.Collectors;
+import org.bson.Document;
 import org.example.game.events.BoardCreated;
 import org.example.game.events.RoundCreated;
 import org.springframework.context.annotation.Configuration;
@@ -28,27 +29,29 @@ public class BoardMaterializeHandler {
 
   @EventListener
   public void handleBoardCreated(BoardCreated boardCreated) {
-    var data = new HashMap<>();
+    var data = new Update();
     var update = new Update();
 
     update.set("started", true);
 
-    data.put("_id", boardCreated.aggregateRootId());
-    data.put("boardId", boardCreated.getBoardId().value());
-    data.put("players",
+    data.set("boardId", boardCreated.getBoardId().value());
+    data.set("players",
         boardCreated.getPlayerIds().stream().map(Identity::value).collect(Collectors.toList()));
 
-    data.put("cards", new HashMap<>());
-    data.put("date", Instant.now());
+    data.set("cards", new HashMap<>());
+    data.set("date", Instant.now());
+//    data.set("round", new HashMap<>());
 
     template.updateFirst(getFilterByAggregateId(boardCreated), update, "gameview").block();
-    template.save(data, COLLECTION_VIEW).block();
+
+    template.updateFirst(getFilterByAggregateId(boardCreated), data,
+        COLLECTION_VIEW).block();
   }
 
   @EventListener
   public void handleRoundCreated(RoundCreated roundCreated) {
     var board = new Update();
-    var round = new HashMap<>();
+    var round = new Document();
 
     round.put("number", roundCreated.getRound().value().number());
     round.put("playersAlive",

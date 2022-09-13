@@ -15,6 +15,8 @@ public class BoardViewModel {
 
   private Set<String> players;
 
+  private String mainPlayerId;
+
   private Map<String, List<Card>> cards;
 
   @Data
