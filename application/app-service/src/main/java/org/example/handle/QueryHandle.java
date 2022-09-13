@@ -33,9 +33,10 @@ public class QueryHandle {
   @Bean
   public RouterFunction<ServerResponse> listGame() {
     return RouterFunctions.route(
-        GET("/games/"),
+        GET("/games/{playerId}"),
 
-        request -> template.findAll(GameListViewModel.class,
+        request -> template.find(findByUid(request.pathVariable("playerId")),
+                GameListViewModel.class,
                 "gameview")
             .collectList()
             .flatMap(list -> ServerResponse.ok()
@@ -43,6 +44,7 @@ public class QueryHandle {
                 .body(
                     BodyInserters.fromPublisher(Flux.fromIterable(list), GameListViewModel.class)))
             .onErrorResume(errorHandler::error)
+
     );
   }
 
@@ -79,6 +81,12 @@ public class QueryHandle {
 
   private Query filterByUIdAndGameId(String uid, String gameId) {
     return new Query(Criteria.where("uid").is(uid).and("gameId").is(gameId));
+  }
+
+  private Query findByUid(String playerId) {
+    Criteria criteria = new Criteria("players." + playerId).exists(true);
+
+    return new Query(criteria);
   }
 
   private Query filterByGameId(String gameId) {
