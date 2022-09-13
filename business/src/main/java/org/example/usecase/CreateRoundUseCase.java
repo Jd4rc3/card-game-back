@@ -1,17 +1,16 @@
 package org.example.usecase;
 
 import co.com.sofka.domain.generic.DomainEvent;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Objects;
 import org.example.game.Game;
-import org.example.game.commands.CreateRoundCommand;
+import org.example.game.events.RoundFinished;
 import org.example.game.values.GameId;
-import org.example.game.values.PlayerId;
-import org.example.game.values.Round;
 import org.example.gateway.GameDomainEventRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public class CreateRoundUseCase extends UseCaseForCommand<CreateRoundCommand> {
+public class CreateRoundUseCase extends UseCaseForEvent<RoundFinished> {
 
   private final GameDomainEventRepository repository;
 
@@ -20,22 +19,21 @@ public class CreateRoundUseCase extends UseCaseForCommand<CreateRoundCommand> {
   }
 
   @Override
-  public Flux<DomainEvent> apply(Mono<CreateRoundCommand> createRoundCommandMono) {
-    return createRoundCommandMono.flatMapMany((command) ->
-        repository
-            .getEventsBy(command.getGameId().value()).collectList()
-            .flatMapIterable(event -> {
-              var game = Game.from(GameId.of(command.getGameId().value()), event);
+  public Flux<DomainEvent> apply(Mono<RoundFinished> roundFinishedMono) {
+    return roundFinishedMono.flatMapMany(event ->
+        repository.getEventsBy(event.aggregateParentId())
+            .collectList()
+            .flatMapIterable(events -> {
 
-              var players = command.getPlayers().stream()
-                  .map(PlayerId::of)
-                  .collect(Collectors.toSet());
+              var game = Game.from(GameId.of(event.aggregateParentId()), events);
+              var players = new HashSet<>(event.getPlayers());
+              var round = game.round();
 
-              if (game.round() == null) {
-                game.createRound(new Round(1, players), command.getTime());
+              if (Objects.isNull(round)) {
+                throw new IllegalArgumentException("Should exist a round");
               }
 
-              game.round().incrementRound(players);
+              game.createRound(round.incrementRound(players), 60);
 
               return game.getUncommittedChanges();
             })
