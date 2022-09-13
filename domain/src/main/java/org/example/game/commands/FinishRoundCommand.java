@@ -8,27 +8,25 @@ import org.example.game.values.PlayerId;
 
 public class FinishRoundCommand extends Command {
 
-  private final GameId gameId;
+  private GameId gameId;
 
-  private final Set<PlayerId> players;
+  private Set<PlayerId> players;
 
-  private final BoardId boardId;
-
-  public FinishRoundCommand(GameId gameId, BoardId boardId, Set<PlayerId> players) {
-    this.gameId = gameId;
-    this.boardId = boardId;
-    this.players = players;
-  }
+  private BoardId boardId;
 
   public GameId getGameId() {
     return gameId;
   }
 
-  public BoardId getBoardId() {
-    return boardId;
+  public void setGameId(String gameId) {
+    this.gameId = GameId.of(gameId);
   }
 
   public Set<PlayerId> getPlayers() {
     return players;
+  }
+
+  public BoardId getBoardId() {
+    return boardId;
   }
 }
